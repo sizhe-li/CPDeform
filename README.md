@@ -32,5 +32,5 @@ python3 scripts/launch_training.py \
 --env_name multistage_writer
 ```
 
-The experiment results will be stored in the `target_templates` folder. 
+The experiment results will be stored in the `diff_phys` folder. 
 
