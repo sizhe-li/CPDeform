@@ -1,6 +1,7 @@
 # CPDeform
 Code and data for paper [Contact Points Discovery for Soft-Body Manipulations with Differentiable Physics](https://lester0866.github.io/publication/contact_points_discovery_iclr2022/) at ICLR 2022 (Spotlight).
 
+![](https://github.com/lester0866/CPDeform/tree/main/demo/writer_demo.gif)
 ```bibtex
 @InProceedings{li2022contact,
 author = {Li, Sizhe and Huang, Zhiao and Du, Tao and Su, Hao and Tenenbaum, Joshua and Gan, Chuang},
