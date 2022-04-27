@@ -36,3 +36,6 @@ python3 scripts/launch_training.py \
 
 The experiment results will be stored in the `diff_phys` folder. 
 
+# Acknowledgements
+
+Our physics simulation is based on [PlasticineLab](https://github.com/hzaskywalker/PlasticineLab), implemented using Taichi.
