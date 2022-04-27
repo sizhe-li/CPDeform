@@ -12,23 +12,6 @@ class Clamp(PrimitiveSampler):
         super(Clamp, self).__init__(taichi_env, loss, **kwargs)
 
     def sample_single_stage_plans(self, poi, x, g, F):
-        """
-        1. For every point in neighborhood, we calculate the three
-        possible poses of clamping for x, y, and z axes.
-
-        2. Formally, we use the neighborhood point as the placement location
-        for the first manipulator. We then ray-trace in x, y, and z axes to place
-        the second manipulator.
-
-        3. For a given ray-trace direction and start location pair,
-            a. the pair is considered infeasible and the search is stopped if
-            the distance traveled exceeds a given threshold (e.g. 0.8)
-
-            b. The search is considered complete if the ray has passed through an object
-            and now the minimum sdf value is larger than the defined threshold `min_dist`
-
-            c. Upon completion, we calculate the sum of scores from the two manipulators
-        """
 
         prim_inds = self.get_curr_prim_inds()
         assert len(prim_inds) == 2  # must be clamping
@@ -88,7 +71,6 @@ class ClampReshape(Clamp):
     def place_primitiveA(self, direction, prim_idxA, poi, x, g, F):
         assert direction.sum() != 0
 
-        # ray trace
         step_size = self.cfg.min_dist / 4
         best_pointA, best_scoreA = None, -np.inf
 
@@ -125,7 +107,6 @@ class ClampReshape(Clamp):
 
         assert direction.sum() != 0
 
-        # ray trace
         step_size = self.cfg.min_dist / 4
         best_pointB, best_scoreB = None, -np.inf
 
@@ -184,7 +165,6 @@ class ClampTransport(Clamp):
             direction[1] = 0.0  # make sure the clamp is vertically stable
             direction = direction / np.linalg.norm(direction)
 
-        # ray trace
         step_size = self.cfg.neighborhood_size * 0.05
         pointB = pointA.copy()
 
