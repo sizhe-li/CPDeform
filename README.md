@@ -9,21 +9,19 @@ booktitle = {International Conference on Learning Representations (ICLR)},
 year = {2022}}
 ```
 
-### Installation
-Taichi has gone through some refactoring, please make sure your downloaded version is `<= 0.7.30`
+# Installation
 
----
 ```bash
 python3 -m pip install -e .
 conda install pyg -c pyg
 ```
 
-### Data
+# Data
 
 Download target templates [here](https://drive.google.com/drive/folders/1Ym7XA-1_W1XZ9c0n8jJq04bpVbH2qTF8?usp=sharing),
 and put the folder `diff_phys` that contains goal shapes onto your machine.
 
-### Experiments
+# Experiments
 
 Run the following to train an agent that writes "ICLR" on a plasticine board:
 
