@@ -1,0 +1,93 @@
+SIMULATOR:
+  quality: 1
+  ground_friction: 2.
+  ground_height: 0.3
+  gravity: (0., -10., 0.)
+
+SHAPES:
+  - shape: box
+    width: (0.25, 0.08, 0.3)
+    init_pos: (0.5, 0.35, 0.5)
+    n_particles: 10000
+
+PRIMITIVES:
+  - shape: Box
+    r: 0.01
+    size: (0.015, 0.125, 0.06)
+    init_pos: (0.34, 0.45, 0.5)
+    init_rot: (1.0, 0.0, 0.0, 0.0)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 3
+      scale: (0.01, 0.01, 0.01)
+    poses:
+      - rot: (1.0, 0.0, 0.0, 0.0)
+        dir: (1.0, 0.0, 0.0)
+      - rot: (0.5, 0.5, 0.5, 0.5)
+        dir: (0.0, 1.0, 0.0)
+      - rot: (1.0, 0.0, 1.0, 0.0)
+        dir: (0.0, 0.0, 1.0)
+
+  - shape: Box
+    r: 0.01
+    size: (0.015, 0.125, 0.06)
+    init_pos: (0.66, 0.45, 0.5)
+    init_rot: (1.0, 0.0, 0.0, 0.0)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 3
+      scale: (0.01, 0.01, 0.01)
+    poses:
+      - rot: (1.0, 0.0, 0.0, 0.0)
+        dir: (1.0, 0.0, 0.0)
+      - rot: (0.5, 0.5, 0.5, 0.5)
+        dir: (0.0, 1.0, 0.0)
+      - rot: (1.0, 0.0, 1.0, 0.0)
+        dir: (0.0, 0.0, 1.0)
+
+RENDERER:
+  spp: 10
+  camera_pos: (0.5, 2.5, 2.)
+  camera_rot: (1.0, 0.)
+  use_directional_light: True
+  light_direction: (0.1, 1, 0.3)
+
+VARIANTS:
+  -
+  - PRIMITIVES:
+      - shape: Box
+        r: 0.01
+        size: (0.015, 0.125, 0.06)
+        init_pos: (0.34, 0.45, 0.5)
+        init_rot: (1.0, 0.0, 0.0, 0.0)
+        color: (0.8, 0.8, 0.8)
+        friction: 0.9
+        action:
+          dim: 6
+          scale: (0.01, 0.01, 0.01, 0.015, 0.015, 0.015)
+        poses:
+          - rot: (1.0, 0.0, 0.0, 0.0)
+            dir: (1.0, 0.0, 0.0)
+          - rot: (0.5, 0.5, 0.5, 0.5)
+            dir: (0.0, 1.0, 0.0)
+          - rot: (1.0, 0.0, 1.0, 0.0)
+            dir: (0.0, 0.0, 1.0)
+      - shape: Box
+        r: 0.01
+        size: (0.015, 0.125, 0.06)
+        init_pos: (0.66, 0.45, 0.5)
+        init_rot: (1.0, 0.0, 0.0, 0.0)
+        color: (0.8, 0.8, 0.8)
+        friction: 0.9
+        action:
+          dim: 6
+          scale: (0.01, 0.01, 0.01, 0.015, 0.015, 0.015)
+        poses:
+          - rot: (1.0, 0.0, 0.0, 0.0)
+            dir: (1.0, 0.0, 0.0)
+          - rot: (0.5, 0.5, 0.5, 0.5)
+            dir: (0.0, 1.0, 0.0)
+          - rot: (1.0, 0.0, 1.0, 0.0)
+            dir: (0.0, 0.0, 1.0)

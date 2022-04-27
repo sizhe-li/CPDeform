@@ -1,0 +1,137 @@
+SIMULATOR:
+  E: 5000.
+  yield_stress: 200.
+  gravity: (0., -5., 0.)
+#  ground_friction: 2.
+SHAPES:
+  - shape: box
+    width: (0.1, 0.1, 0.1)
+    init_pos: (0.2, 0.05, 0.5)
+    n_particles: 3333
+    color: ((127 << 16) + 127)
+  - shape: box
+    width: (0.1, 0.1, 0.1)
+    init_pos: (0.5, 0.05, 0.5)
+    n_particles: 3333
+    color: ((127 << 16) + 127)
+  - shape: box
+    width: (0.1, 0.1, 0.1)
+    init_pos: (0.8, 0.05, 0.5)
+    n_particles: 3333
+    color: ((127 << 16) + 127)
+
+PRIMITIVES:
+  - shape: None
+    h: None
+    r: None
+    radius: None
+    size: None
+    init_pos: (0.34, 0.45, 0.5)
+    init_rot: (1.0, 0.0, 0.0, 0.0)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 3
+      scale: (0.01, 0.01, 0.01)
+    poses:
+      -
+  - shape: None
+    h: None
+    r: None
+    radius: None
+    size: None
+    init_pos: (0.66, 0.45, 0.5)
+    init_rot: (1.0, 0.0, 0.0, 0.0)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 3
+      scale: (0.01, 0.01, 0.01)
+    poses:
+      -
+
+ENV:
+  loss:
+    target_path: envs/assets/multistage_move-v1.npy
+RENDERER:
+  image_res: (256, 256)
+  camera_pos: (0.5, 2.5, 2.)
+  camera_rot: (1.0, 0.)
+  use_directional_light: True
+  light_direction: (0.1, 1, 0.3)
+  spp: 10
+
+VARIANTS:
+  - ENV:
+      loss:
+        target_path: envs/assets/multistage_move-v1.npy
+    PRIMITIVES:
+      - shape: Sphere
+        radius: 0.03
+        init_pos: (0.11, 0.05, 0.5)
+        color: (0.8, 0.8, 0.8)
+        friction: 0.9
+        action:
+          dim: 3
+          scale: (0.01, 0.01, 0.01)
+        poses:
+          - rot: (1.0, 0.0, 0.0, 0.0)
+            dir: (1.0, 0.0, 0.0)
+          - rot: (0.5, 0.5, 0.5, 0.5)
+            dir: (0.0, 1.0, 0.0)
+          - rot: (1.0, 0.0, 1.0, 0.0)
+            dir: (0.0, 0.0, 1.0)
+      - shape: Sphere
+        radius: 0.03
+        init_pos: (0.29, 0.05, 0.5)
+        color: (0.8, 0.8, 0.8)
+        friction: 0.9
+        action:
+          dim: 3
+          scale: (0.01, 0.01, 0.01)
+        poses:
+          - rot: (1.0, 0.0, 0.0, 0.0)
+            dir: (1.0, 0.0, 0.0)
+          - rot: (0.5, 0.5, 0.5, 0.5)
+            dir: (0.0, 1.0, 0.0)
+          - rot: (1.0, 0.0, 1.0, 0.0)
+            dir: (0.0, 0.0, 1.0)
+
+  - ENV:
+      loss:
+        target_path: envs/assets/multistage_move-v1.npy
+    PRIMITIVES:
+      - shape: Box
+        r: 0.01
+        size: (0.015, 0.03, 0.03)
+        init_pos: (0.34, 0.45, 0.5)
+        init_rot: (1.0, 0.0, 0.0, 0.0)
+        color: (0.8, 0.8, 0.8)
+        friction: 0.9
+        action:
+          dim: 6
+          scale: (0.01, 0.01, 0.01, 0.015, 0.015, 0.015)
+        poses:
+          - rot: (1.0, 0.0, 0.0, 0.0)
+            dir: (1.0, 0.0, 0.0)
+          - rot: (0.5, 0.5, 0.5, 0.5)
+            dir: (0.0, 1.0, 0.0)
+          - rot: (1.0, 0.0, 1.0, 0.0)
+            dir: (0.0, 0.0, 1.0)
+      - shape: Box
+        r: 0.01
+        size: (0.015, 0.03, 0.03)
+        init_pos: (0.34, 0.45, 0.5)
+        init_rot: (1.0, 0.0, 0.0, 0.0)
+        color: (0.8, 0.8, 0.8)
+        friction: 0.9
+        action:
+          dim: 6
+          scale: (0.01, 0.01, 0.01, 0.015, 0.015, 0.015)
+        poses:
+          - rot: (1.0, 0.0, 0.0, 0.0)
+            dir: (1.0, 0.0, 0.0)
+          - rot: (0.5, 0.5, 0.5, 0.5)
+            dir: (0.0, 1.0, 0.0)
+          - rot: (1.0, 0.0, 1.0, 0.0)
+            dir: (0.0, 0.0, 1.0)

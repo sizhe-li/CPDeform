@@ -1,0 +1,70 @@
+SIMULATOR:
+  quality: 1
+  E: 5000.
+  yield_stress: 50.
+  ground_friction: 100.
+  ground_height: 0.27
+  gravity: (0., -1., 0.)
+
+SHAPES:
+  - shape: box
+    width: (0.30000458, 0.03649736, 0.28723195)
+    init_pos: (0.5, 0.35, 0.5)
+    n_particles: 10000
+
+PRIMITIVES:
+  - shape: Box
+    r: 0.01
+    size: (0.015, 0.125, 0.06)
+    init_pos: (0.32, 0.45, 0.5)
+    init_rot: (1.0, 0.0, 0.0, 0.0)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 6
+      scale: (0.01, 0.01, 0.01, 0.015, 0.015, 0.015)
+    poses:
+      - rot: (1.0, 0.0, 0.0, 0.0)
+        dir: (1.0, 0.0, 0.0)
+      - rot: (0.5, 0.5, 0.5, 0.5)
+        dir: (0.0, 1.0, 0.0)
+      - rot: (1.0, 0.0, 1.0, 0.0)
+        dir: (0.0, 0.0, 1.0)
+
+  - shape: Box
+    r: 0.01
+    size: (0.015, 0.125, 0.06)
+    init_pos: (0.68, 0.45, 0.5)
+    init_rot: (1.0, 0.0, 0.0, 0.0)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 6
+      scale: (0.01, 0.01, 0.01, 0.015, 0.015, 0.015)
+    poses:
+      - rot: (1.0, 0.0, 0.0, 0.0)
+        dir: (1.0, 0.0, 0.0)
+      - rot: (0.5, 0.5, 0.5, 0.5)
+        dir: (0.0, 1.0, 0.0)
+      - rot: (1.0, 0.0, 1.0, 0.0)
+        dir: (0.0, 0.0, 1.0)
+  - shape: Cylinder
+    h: 0.15
+    r: 0.05
+    init_pos: (0.5, 0.15, 0.5)
+    color: (0.3, 0.3, 0.3)
+    friction: 0.0
+
+RENDERER:
+  spp: 10
+  camera_pos: (0.5, 2.5, 2.)
+  camera_rot: (1.0, 0.)
+  use_directional_light: True
+  light_direction: (0.1, 1, 0.3)
+
+VARIANTS:
+  - SHAPES:
+      - shape: box
+        width: (0.30000458, 0.06649736, 0.28723195)
+        init_pos: (0.5, 0.37015, 0.5)
+        n_particles: 10000

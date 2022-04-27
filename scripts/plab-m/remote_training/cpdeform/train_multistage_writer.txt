@@ -1,0 +1,1 @@
+--env_name multistage_writer --version 1 --n_trials 5000 --n_iters 200 --horizon 10 --lr 0.1 --topk 10 --min_dist 0.01 --soft_contact_loss --topn_potentials 10

@@ -1,0 +1,1 @@
+--env_name multistage_rope --version 1 --n_trials 10 --n_iters 200 --horizon 50 --lr 0.1 --topk 10 --min_dist 0.005 --soft_contact_loss --n_prims_per_gripper 2 --neighborhood_size 0.3

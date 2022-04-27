@@ -1,0 +1,51 @@
+SIMULATOR:
+  yield_stress: 25.
+  ground_friction: 2.
+SHAPES:
+  - shape: box
+    width: (0.6, 0.06, 0.06)
+    init_pos: (0.5, 0.03, 0.5)
+    n_particles: 10000
+    color: (((0 << 8) + 150) << 8)
+PRIMITIVES:
+  - shape: Sphere
+    radius: 0.03
+    init_pos: (0.22, 0.015, 0.57)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 3
+      scale: (0.01, 0.01, 0.01)
+    poses:
+      - rot: (1.0, 0.0, 0.0, 0.0)
+        dir: (1.0, 0.0, 0.0)
+      - rot: (0.5, 0.5, 0.5, 0.5)
+        dir: (0.0, 1.0, 0.0)
+      - rot: (1.0, 0.0, 1.0, 0.0)
+        dir: (0.0, 0.0, 1.0)
+  - shape: Sphere
+    radius: 0.03
+    init_pos: (0.78, 0.015, 0.57)
+    color: (0.8, 0.8, 0.8)
+    friction: 0.9
+    action:
+      dim: 3
+      scale: (0.01, 0.01, 0.01)
+    poses:
+      - rot: (1.0, 0.0, 0.0, 0.0)
+        dir: (1.0, 0.0, 0.0)
+      - rot: (0.5, 0.5, 0.5, 0.5)
+        dir: (0.0, 1.0, 0.0)
+      - rot: (1.0, 0.0, 1.0, 0.0)
+        dir: (0.0, 0.0, 1.0)
+ENV:
+  loss:
+    target_path: envs/data/multistage_rope-v1.npy
+RENDERER:
+  spp: 10
+  camera_pos: (0.5, 2.5, 2.)
+  camera_rot: (1.0, 0.)
+VARIANTS:
+  - ENV:
+      loss:
+        target_path: envs/assets/multistage_rope-v1.npy
