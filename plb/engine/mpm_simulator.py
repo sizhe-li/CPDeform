@@ -1,6 +1,5 @@
-import taichi as ti
 import numpy as np
-
+import taichi as ti
 from plb.engine.primitive.primitives import Primitives
 
 
@@ -57,22 +56,6 @@ class MPMSimulator:
         self.gravity = ti.Vector.field(dim, dtype=dtype, shape=())  # gravity ...
         self.primitives = primitives
 
-        # actuation - muscle model
-        self.use_actuation = cfg.use_actuation
-        if self.use_actuation:
-            self.actuator_id = ti.field(ti.i32, shape=(n_particles,))
-            self.manipulator_id = ti.field(ti.i32, shape=(n_particles,))
-
-            self._muscle_stiffness = cfg.muscle_stiffness
-            self.muscle_stiffness = ti.field(dtype, shape=())
-            self.fiber_direction = ti.Vector.field(dim, dtype=dtype, shape=(cfg.n_actuator,))
-            self.activation_level = ti.field(dtype, shape=(max_steps, cfg.n_actuator), needs_grad=True)
-
-            self.v_action_scale = 1.5
-            # self.v_average_cnt = ti.field(dtype, shape=(), needs_grad=False)
-            # self.v_average = ti.Vector.field(dim, dtype=dtype, shape=(), needs_grad=True)
-            self.v_action = ti.Vector.field(dim, dtype=dtype, shape=(max_steps, cfg.n_manipulator), needs_grad=True)
-
         # object id
         self.particle_obj_id = ti.field(ti.i32, shape=(n_particles,))
         self.curr_obj_id = ti.field(ti.i32, shape=())
@@ -89,8 +72,6 @@ class MPMSimulator:
         self.yield_stress.fill(self._yield_stress)
         self.mu.fill(self._mu)
         self.lam.fill(self._lam)
-        if self.use_actuation:
-            self.muscle_stiffness.fill(self._muscle_stiffness)
         # object id
         self.particle_obj_id.fill(0)
         self.curr_obj_id.fill(0)
@@ -117,22 +98,11 @@ class MPMSimulator:
             self.V.grad[i] = zero
             self.F_tmp.grad[i] = zero
 
-    # @ti.kernel
-    # def clear_v_average(self):
-    #     zero = ti.Vector.zero(self.dtype, self.dim)
-    #
-    #     self.v_average[None] = zero
-    #     self.v_average.grad[None] = zero
-    #     self.v_average_cnt[None] = 0
 
     @ti.kernel
     def compute_F_tmp(self, f: ti.i32):
         for p in range(0, self.n_particles):  # Particle state update and scatter to grid (P2G)
             self.F_tmp[p] = (ti.Matrix.identity(self.dtype, self.dim) + self.dt * self.C[f, p]) @ self.F[f, p]
-            # if ti.static(self.use_actuation):
-            #     if self.actuator_id[p] != -99:
-            #         self.v_average[None] += self.v[f, p]
-            #         self.v_average_cnt[None] += 1
 
     @ti.kernel
     def svd(self):
@@ -236,24 +206,6 @@ class MPMSimulator:
 
             new_v = self.v[f, p]
 
-            if ti.static(self.use_actuation):
-                act_id = self.actuator_id[p]
-                if act_id >= 0:
-                    activation_level = self.activation_level[f, act_id]
-
-                    l = self.norm(new_F @ self.fiber_direction[act_id])
-                    mmt_ = self.fiber_direction[act_id].outer_product(self.fiber_direction[act_id])
-                    mmt_ = new_F @ mmt_
-                    act = (1 - activation_level / l)
-                    stress_tensor = self.muscle_stiffness[None] * act * mmt_
-                    stress += new_F @ stress_tensor @ new_F.transpose()
-
-                    new_v -= self.dt * self.gravity[None] * 30
-                elif act_id == -1:  # receive v_action but does not actuate
-                    man_id = self.manipulator_id[p]
-                    new_v = (self.v_action[f, man_id] * self.v_action_scale)
-                    # new_v -= self.v_average[None] / self.v_average_cnt
-                    # new_v -= self.dt * self.gravity[None] * 30
 
             stress = (-self.dt * self.p_vol * 4 * self.inv_dx * self.inv_dx) * stress
             affine = stress + self.p_mass * self.C[f, p]
@@ -331,8 +283,6 @@ class MPMSimulator:
     def substep(self, s):
         # centroids[None] = [0, 0] # manually clear the centroids...
         self.clear_grid()
-        # if ti.static(self.use_actuation):
-        #     self.clear_v_average()
         self.compute_F_tmp(s)
         self.svd()
         self.p2g(s)
@@ -347,8 +297,6 @@ class MPMSimulator:
     def substep_grad(self, s):
         self.clear_grid()
         self.clear_SVD_grad()  # clear the svd grid
-        # if ti.static(self.use_actuation):
-        #     self.clear_v_average()
 
         self.compute_F_tmp(s)  # we need to compute it for calculating the svd decomposition
         self.svd()
@@ -482,26 +430,10 @@ class MPMSimulator:
     @ti.kernel
     def compute_grid_m_kernel(self, f: ti.i32):
         for p in range(0, self.n_particles):
-            if ti.static(self.use_actuation):
-                if self.actuator_id[p] == -99:
-                    self.compute_grid_m_helper(f, p)
-            else:
-                # if self.particle_obj_id[p] == self.curr_obj_id:
-                self.compute_grid_m_helper(f, p)
+            self.compute_grid_m_helper(f, p)
 
     @ti.kernel
     def compute_primitive_sdf(self, f: ti.int32):
         for i in range(self.n_particles):
             for j, prim_idx in ti.static(enumerate(self.actionable_prim_list)):
                 self.sdf_dists[j][i] = self.primitives.primitives[prim_idx].sdf(f, self.x[f, i])
-
-    """
-    @ti.complex_kernel
-    def clear_and_compute_grid_m(self, f):
-        self.grid_m.fill(0)
-        self.compute_grid_m_kernel(f)
-
-    @ti.complex_kernel_grad(clear_and_compute_grid_m)
-    def clear_and_compute_grid_m_grad(self, f):
-        self.compute_grid_m_kernel.grad(f)
-    """
