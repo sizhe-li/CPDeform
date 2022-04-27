@@ -4,16 +4,6 @@ import open3d as o3d
 import torch
 
 
-
-
-
-
-
-
-
-
-
-
 def get_int(image_res=(512, 512)):
     fov = 0.23
     int = np.array([
