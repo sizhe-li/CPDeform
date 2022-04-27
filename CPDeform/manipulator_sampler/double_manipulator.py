@@ -1,10 +1,9 @@
 import numpy as np
 import torch
-from torch_geometric.nn import knn
-
 from CPDeform.loss import OptimalTransportLoss
 from CPDeform.manipulator_sampler.base import PrimitiveSampler, length
 from plb.engine.taichi_env import TaichiEnv
+from torch_geometric.nn import knn
 
 
 class Clamp(PrimitiveSampler):
